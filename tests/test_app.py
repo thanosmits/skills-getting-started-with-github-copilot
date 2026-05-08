@@ -3,8 +3,6 @@ from httpx import AsyncClient
 from fastapi import status
 from src.app import app
 
-import asyncio
-
 @pytest.mark.asyncio
 async def test_root_redirect():
     # Arrange

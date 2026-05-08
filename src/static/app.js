@@ -20,29 +20,68 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const spotsLeft = details.max_participants - details.participants.length;
 
+        const title = document.createElement("h4");
+        title.textContent = name;
 
-        // Build participants list HTML with delete icon
-        let participantsHTML = "<ul class='participants-list'>";
+        const description = document.createElement("p");
+        description.textContent = details.description;
+
+        const schedule = document.createElement("p");
+        const scheduleLabel = document.createElement("strong");
+        scheduleLabel.textContent = "Schedule:";
+        schedule.appendChild(scheduleLabel);
+        schedule.appendChild(document.createTextNode(` ${details.schedule}`));
+
+        const availability = document.createElement("p");
+        const availabilityLabel = document.createElement("strong");
+        availabilityLabel.textContent = "Availability:";
+        availability.appendChild(availabilityLabel);
+        availability.appendChild(document.createTextNode(` ${spotsLeft} spots left`));
+
+        const participantsSection = document.createElement("div");
+        participantsSection.className = "participants-section";
+
+        const participantsLabel = document.createElement("strong");
+        participantsLabel.textContent = "Participants:";
+        participantsSection.appendChild(participantsLabel);
+
+        const participantsList = document.createElement("ul");
+        participantsList.className = "participants-list";
+
         if (details.participants && details.participants.length > 0) {
           details.participants.forEach(email => {
-            participantsHTML += `<li class="participant-item"><span class="participant-email">${email}</span><span class="delete-participant" title="Remove" data-activity="${name}" data-email="${email}">&#128465;</span></li>`;
+            const participantItem = document.createElement("li");
+            participantItem.className = "participant-item";
+
+            const participantEmail = document.createElement("span");
+            participantEmail.className = "participant-email";
+            participantEmail.textContent = email;
+
+            const deleteIcon = document.createElement("span");
+            deleteIcon.className = "delete-participant";
+            deleteIcon.title = "Remove";
+            deleteIcon.dataset.activity = name;
+            deleteIcon.dataset.email = email;
+            deleteIcon.innerHTML = "&#128465;";
+
+            participantItem.appendChild(participantEmail);
+            participantItem.appendChild(deleteIcon);
+            participantsList.appendChild(participantItem);
           });
         } else {
-          participantsHTML += "<li class='no-participants'>No participants yet</li>";
+          const noParticipants = document.createElement("li");
+          noParticipants.className = "no-participants";
+          noParticipants.textContent = "No participants yet";
+          participantsList.appendChild(noParticipants);
         }
-        participantsHTML += "</ul>";
 
-        activityCard.innerHTML = `
-          <h4>${name}</h4>
-          <p>${details.description}</p>
-          <p><strong>Schedule:</strong> ${details.schedule}</p>
-          <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
-          <div class="participants-section">
-            <strong>Participants:</strong>
-            ${participantsHTML}
-          </div>
-        `;
+        participantsSection.appendChild(participantsList);
 
+        activityCard.appendChild(title);
+        activityCard.appendChild(description);
+        activityCard.appendChild(schedule);
+        activityCard.appendChild(availability);
+        activityCard.appendChild(participantsSection);
 
         activitiesList.appendChild(activityCard);
 

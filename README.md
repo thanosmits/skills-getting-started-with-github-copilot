@@ -12,5 +12,16 @@ Remember, it's self-paced so feel free to take a break! ☕️
 
 ---
 
+## Running Backend Tests
+
+To run backend FastAPI tests (using pytest):
+
+```bash
+pip install -r requirements.txt
+pytest tests/
+```
+
+All tests follow the Arrange-Act-Assert (AAA) pattern for clarity.
+
 &copy; 2025 GitHub &bull; [Code of Conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct/code_of_conduct.md) &bull; [MIT License](https://gh.io/mit)
 
